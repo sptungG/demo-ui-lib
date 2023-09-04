@@ -1,0 +1,153 @@
+include:
+  - project: 'sapo-core/gitlab-ci-template'
+    file: '/Core.Trigger.gitlab-ci.yml'
+  - project: 'sapo-core/gitlab-ci-template'
+    file: '/NotifyToSlack.gitlab-ci-template.yml'
+
+stages:
+  - build
+  - package
+  - deploy
+
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA-$CI_COMMIT_REF_SLUG
+
+.dependencies_cache:
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .npm
+lint:
+  stage: build
+  tags:
+    - npm
+  extends: .dependencies_cache
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npm run lint:quiet
+  only:
+    refs:
+      - /(^sb-)?\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+
+build-lib:
+  stage: build
+  image: node:latest
+  tags:
+    - sapocore-docker
+  extends: .dependencies_cache
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npm run build
+    - echo $CI_JOB_TOKEN
+    - echo "//${CI_SERVER_HOST}/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}">.npmrc
+    - npm publish #e
+  variables:
+    NODE_ENV: $CI_COMMIT_REF_SLUG
+  only:
+    refs:
+      - /^\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+
+build-storybook:
+  stage: build
+  image: node:latest
+  tags:
+    - sapocore-docker
+  extends: .dependencies_cache
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npm run build:storybook
+  artifacts:
+    paths:
+      - storybook-static
+      - Dockerfile
+      - nginx.conf
+    expire_in: 1 hour
+  variables:
+    NODE_ENV: $CI_COMMIT_REF_SLUG
+  only:
+    refs:
+      - /(^sb-)+\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+
+dockerize:
+  stage: package
+  tags:
+    - dockercli
+  before_script:
+    - ls -a
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    refs:
+      - /(^sb-)+\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+
+deploy-to-dev:
+  extends: .deploy-to-template
+  only:
+    refs:
+      - /deploy-to-dev?$/
+
+deploy-to-production:
+  extends: .deploy-to-template
+  only:
+    refs:
+      - /deploy-to-production?$/
+
+deploy-to-dev2:
+  extends: .deploy-to-template
+  before_script:
+    - export _CI_JOB_TOKEN=$CI_JOB_TOKEN_DEV2
+    - export _CI_JOB_REF=$CI_JOB_REF_DEV2
+    - export _CI_JOB_ID=$CI_JOB_ID_DEV2
+  only:
+    refs:
+      - /(^sb-)+\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+    variables:
+      - $CI_REGISTRY_IMAGE
+
+notify-started:
+  extends: .pre-notify-template
+  before_script:
+    - export GIT_RECENT_COMMIT=$(git log -2 --pretty=format:'%h - %an, %ar - %s')
+    - export NOTIFY_MESSAGE="$CI_SLACK_PREFIX Build started\\n$GIT_RECENT_COMMIT"
+  only:
+    refs:
+      - /(^sb-)?\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+    variables:
+      - $CI_REGISTRY_IMAGE
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[ci-cd .*skip\]/
+
+notify-on-success:
+  extends: .post-notify-template
+  before_script:
+    - export NOTIFY_MESSAGE="$CI_SLACK_PREFIX Build success\\n\`$IMAGE_TAG\`"
+  when: on_success
+  only:
+    refs:
+      - /(^sb-)?\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[ci-cd .*skip\]/
+
+nofity-on-failure:
+  extends: .post-notify-template
+  variables:
+    NOTIFY_COLOR: '#FF0000'
+  before_script:
+    - export GIT_RECENT_COMMIT=$(git log -2 --pretty=format:'%h - @%an, %ar - %s')
+    - export NOTIFY_MESSAGE="$CI_SLACK_PREFIX Build FAILURE @channel\\n$GIT_RECENT_COMMIT"
+  when: on_failure
+  only:
+    refs:
+      - /(^sb-)?\d+\.\d+\.\d+(\-[-a-zA-Z.\d]*)?$/
+    variables:
+      - $CI_REGISTRY_IMAGE
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[ci-cd .*skip\]/
