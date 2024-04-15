@@ -1,0 +1,16 @@
+import{j as n}from"./styled-components.browser.esm-BiQtg4p9.js";import{R as C}from"./index-BjzEU6Zr.js";import{B as c,S as R,a as b,b as x}from"./Button-BneYr597.js";import"./CircularProgress-B7DgIoGt.js";import"./index-C0fuwcOY.js";import"./OffOutlineCloseIcon-C3ZF4iWJ.js";import"./OffCloseIcon-dIrXP-IS.js";import"./CircleCheckOutlineIcon-7m-Hf7Te.js";import"./ClearIcon-CTCte1z_.js";import"./ErrorOutlineIcon-C0uk5SEn.js";import"./SapoIcon-Ong2Henh.js";import"./v4-8I8R7izr.js";const G={title:"Components/Button",component:c.type,argTypes:{}},a=i=>n.jsx(c.type,{...i}),e=a.bind({});e.args={children:"Button"};e.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=8022%3A6230"}};const t=a.bind({});t.args={children:"Button",startIcon:n.jsx(R,{})};t.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=6359%3A6009"}};const s=a.bind({});s.args={children:"Button",startIcon:n.jsx(b,{}),endIcon:n.jsx(x,{})};s.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=6359%3A6009"}};const r=a.bind({});r.args={startIcon:n.jsx(x,{style:{position:"absolute"}}),width:40};r.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=6359%3A6009"}};const O=i=>{const[Y,p]=C.useState(!1),A=()=>{p(!0),setTimeout(()=>p(!1),1e3)};return n.jsx(c.type,{onClick:A,isLoading:Y,...i})},o=O.bind({});o.args={children:"Press to load"};o.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=6359%3A6009"}};var m,d,g;e.parameters={...e.parameters,docs:{...(m=e.parameters)==null?void 0:m.docs,source:{originalSource:`args => {
+  return <Button.type {...args} />;
+}`,...(g=(d=e.parameters)==null?void 0:d.docs)==null?void 0:g.source}}};var u,l,f;t.parameters={...t.parameters,docs:{...(u=t.parameters)==null?void 0:u.docs,source:{originalSource:`args => {
+  return <Button.type {...args} />;
+}`,...(f=(l=t.parameters)==null?void 0:l.docs)==null?void 0:f.source}}};var B,y,L;s.parameters={...s.parameters,docs:{...(B=s.parameters)==null?void 0:B.docs,source:{originalSource:`args => {
+  return <Button.type {...args} />;
+}`,...(L=(y=s.parameters)==null?void 0:y.docs)==null?void 0:L.source}}};var j,w,h;r.parameters={...r.parameters,docs:{...(j=r.parameters)==null?void 0:j.docs,source:{originalSource:`args => {
+  return <Button.type {...args} />;
+}`,...(h=(w=r.parameters)==null?void 0:w.docs)==null?void 0:h.source}}};var I,S,D;o.parameters={...o.parameters,docs:{...(I=o.parameters)==null?void 0:I.docs,source:{originalSource:`args => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const handleOnClick = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 1000);
+  };
+  return <Button.type onClick={handleOnClick} isLoading={isLoading} {...args}></Button.type>;
+}`,...(D=(S=o.parameters)==null?void 0:S.docs)==null?void 0:D.source}}};const H=["Basic","IconLeftRight","IconLeftAndRight","IconOnlyButton","PressLoadingButton"];export{e as Basic,s as IconLeftAndRight,t as IconLeftRight,r as IconOnlyButton,o as PressLoadingButton,H as __namedExportsOrder,G as default};

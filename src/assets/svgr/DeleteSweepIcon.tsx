@@ -1,0 +1,50 @@
+import * as React from "react";
+import { SVGProps } from "react";
+import ISvgProps from "../types";
+
+function SvgDeleteSweepIcon(props: ISvgProps) {
+  const sizeCheck = (value: any) => {
+    if (props.size === "small") {
+      return 20;
+    } else if (props.size === "regular") {
+      return 24;
+    } else if (props.size === "large") {
+      return 36;
+    } else {
+      return value;
+    }
+  };
+
+  const colorCheck = (value: any) => {
+    if (value === "primary") {
+      return "#0088FF";
+    } else if (value === "success") {
+      return "#0FD186";
+    } else if (value === "error") {
+      return "#FF4D4D";
+    } else if (value === "warning") {
+      return "#FFAE06";
+    } else {
+      return value;
+    }
+  };
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.style?.width || sizeCheck(props.style?.fontSize)}
+      height={props.style?.height || sizeCheck(props.style?.fontSize)}
+      fontSize={sizeCheck(props.style?.fontSize)}
+      {...props}
+    >
+      <path
+        d="M15 16h4v2h-4v-2Zm0-8h7v2h-7V8Zm0 4h6v2h-6v-2ZM3 18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V8H3v10ZM14 5h-3l-1-1H6L5 5H2v2h12V5Z"
+        fill={colorCheck(props.color) || `currentColor`}
+      />
+    </svg>
+  );
+}
+
+export default SvgDeleteSweepIcon;

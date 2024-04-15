@@ -1,0 +1,7 @@
+import{j as g}from"./styled-components.browser.esm-BiQtg4p9.js";import{r as u}from"./index-BjzEU6Zr.js";import{C as p}from"./Checkbox-BYMGdY0l.js";import"./useRippleCenter-fyPqct0G.js";import"./v4-8I8R7izr.js";const y={title:"Components/CheckBox",component:p.type,argTypes:{}},d=m=>{const[i,h]=u.useState(!1);return g.jsx(p.type,{checked:i,...m,onChange:h})},e=d.bind({});e.args={};e.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=11149%3A9990"}};const s=d.bind({});s.args={label:"Chọn tất cả"};s.parameters={design:{type:"figma",url:"https://www.figma.com/file/dLpg6DjeBzl6jMtYQYe8uu/0.-Design-System?node-id=2%3A118"}};var t,r,a;e.parameters={...e.parameters,docs:{...(t=e.parameters)==null?void 0:t.docs,source:{originalSource:`args => {
+  const [checked, setChecked] = useState(false);
+  return <CheckBox.type checked={checked} {...args} onChange={setChecked} />;
+}`,...(a=(r=e.parameters)==null?void 0:r.docs)==null?void 0:a.source}}};var c,o,n;s.parameters={...s.parameters,docs:{...(c=s.parameters)==null?void 0:c.docs,source:{originalSource:`args => {
+  const [checked, setChecked] = useState(false);
+  return <CheckBox.type checked={checked} {...args} onChange={setChecked} />;
+}`,...(n=(o=s.parameters)==null?void 0:o.docs)==null?void 0:n.source}}};const B=["Basic","WithLabel"];export{e as Basic,s as WithLabel,B as __namedExportsOrder,y as default};
