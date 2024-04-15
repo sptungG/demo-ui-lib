@@ -25,7 +25,7 @@ export { default as ButtonSelect } from "./components/ButtonSelect";
 export { default as SelectItem } from "./components/SelectItem";
 
 export { default as Dropdown } from "./components/Dropdown";
-export type { ActivatorDropdownProps } from "./components/Dropdown";
+export { ActivatorDropdownProps } from "./components/Dropdown";
 
 export { default as TextField } from "./components/TextField";
 
@@ -38,37 +38,28 @@ export { default as DateField } from "./components/DateField";
 export { default as Checkbox } from "./components/Checkbox";
 
 export { default as DatePicker } from "./components/DatePicker";
-export type { DatePickerProps, ActivatorDatePickerProps } from "./components/DatePicker";
+export { DatePickerProps, ActivatorDatePickerProps } from "./components/DatePicker";
 
+export { default as DatePickerPlus } from "./components/DatePicker/DatePickerPlus";
 export {
-  default as DatePickerPlus
-} from "./components/DatePicker/DatePickerPlus";
-export type {
   DateTransfer,
   TextDateTransfer,
-  ActivatorDatePickerPlusProps
+  ActivatorDatePickerPlusProps,
 } from "./components/DatePicker/DatePickerPlus";
 
 export { default as DatePickerShortRange } from "./components/DatePicker/DatePickerShortRange";
 
 export { default as TimePicker } from "./components/TimePicker";
 
+export { default as DropdownInfinite } from "./components/DropdownInfinite";
 export {
-  default as DropdownInfinite
-} from "./components/DropdownInfinite";
-export type {
   ActivatorDropdownInfiniteProps,
   DropdownInfiniteProps,
-  DataSource
+  DataSource,
 } from "./components/DropdownInfinite";
 
-export {
-  default as DropdownSearch
-} from "./components/DropdownSearch";
-export type {
-  ActivatorDropdownSearchProps,
-  DropdownSearchProps
-} from "./components/DropdownSearch";
+export { default as DropdownSearch } from "./components/DropdownSearch";
+export { ActivatorDropdownSearchProps, DropdownSearchProps } from "./components/DropdownSearch";
 
 export { default as Alert } from "./components/Alert";
 
@@ -113,14 +104,14 @@ export { default as useTooltip } from "./hooks/useTooltip";
 export { default as Tooltip } from "./components/TooltipCustom";
 
 export { default as Tabs } from "./components/Tabs";
-export type { TabDescriptor } from "./components/Tabs";
+export { TabDescriptor } from "./components/Tabs";
 
 export { default as Pagination } from "./components/Pagination";
 
 export { default as LinearProgress } from "./components/LinearProgress";
 
 export { default as ProgressStep } from "./components/ProgressStep";
-export type { ProgressStepDescriptor, ProgressStepProps } from "./components/ProgressStep";
+export { ProgressStepDescriptor, ProgressStepProps } from "./components/ProgressStep";
 
 export { default as Grid } from "./components/Grid";
 

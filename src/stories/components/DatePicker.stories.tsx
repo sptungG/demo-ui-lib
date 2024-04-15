@@ -9,7 +9,7 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof DatePicker>;
 
-const Template: ComponentStory<typeof DatePicker> = (args) => {
+const Template: ComponentStory<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   return <DatePicker.type label="Ngày tham chiếu" {...args} value={date} onChange={setDate} />;
 };
@@ -22,10 +22,17 @@ Basic.parameters = {
   },
 };
 
-const TemplateYearSelect: ComponentStory<typeof DatePicker> = (args) => {
+const TemplateYearSelect: ComponentStory<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   return (
-    <DatePicker.type label="Ngày sinh" {...args} value={date} onChange={setDate} isYearSelect maxDate={new Date()} />
+    <DatePicker.type
+      label="Ngày sinh"
+      {...args}
+      value={date}
+      onChange={setDate}
+      isYearSelect
+      maxDate={new Date()}
+    />
   );
 };
 
@@ -37,7 +44,7 @@ YearSelect.parameters = {
   },
 };
 
-const TemplateCustom: ComponentStory<typeof DatePicker> = (args) => {
+const TemplateCustom: ComponentStory<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   const renderActivator = useCallback(
     ({ onClick, reference }: ActivatorDatePickerProps) => (
@@ -47,7 +54,9 @@ const TemplateCustom: ComponentStory<typeof DatePicker> = (args) => {
     ),
     []
   );
-  return <DatePicker.type {...args} value={date} onChange={setDate} renderActivator={renderActivator} />;
+  return (
+    <DatePicker.type {...args} value={date} onChange={setDate} renderActivator={renderActivator} />
+  );
 };
 
 export const Custom = TemplateCustom.bind({});
@@ -58,7 +67,7 @@ Custom.parameters = {
   },
 };
 
-const TemplateRange: ComponentStory<typeof DatePicker> = (args) => {
+const TemplateRange: ComponentStory<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   const [endDate, setEndDate] = useState<Date | null>();
   return (
