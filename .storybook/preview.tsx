@@ -2,19 +2,24 @@ import { themes } from "@storybook/theming";
 import React from "react";
 import "./index.css";
 import UIComponentProvider from "../src/theme/UIComponentProvider";
+import { Preview } from "@storybook/react";
 
-export const parameters = {
-  docs: {
-    theme: themes.normal,
+const preview: Preview = {
+  parameters: {
+    docs: {
+      theme: themes.normal,
+    },
+    layout: "padded",
   },
-  layout: "fullscreen",
+  decorators: [
+    (Story: any) => {
+      return (
+        <UIComponentProvider>
+          <Story />
+        </UIComponentProvider>
+      );
+    },
+  ],
 };
-export const decorators = [
-  (Story: any) => {
-    return (
-      <UIComponentProvider>
-        <Story />
-      </UIComponentProvider>
-    );
-  },
-];
+
+export default preview;

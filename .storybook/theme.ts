@@ -1,4 +1,4 @@
-import { create } from "@storybook/theming";
+import { create } from '@storybook/theming/create';
 
 export default create({
   base: "light",
@@ -11,7 +11,7 @@ export default create({
   // Text colors
   textColor: "#0F1824",
 
-  brandTitle: "Sapo Storybook",
+  brandTitle: "Demo Sapo Storybook",
   brandUrl: "https://sapo.vn",
   brandImage: "https://www.sapo.vn/Themes/Portal/Default/StylesV2/images/logo/Sapo-logo.svg?v=202207150300",
   brandTarget: "_blank",
