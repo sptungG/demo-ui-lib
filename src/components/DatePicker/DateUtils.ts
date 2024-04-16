@@ -1,8 +1,8 @@
-import * as Moment from "moment";
-import { extendMoment } from "moment-range";
+import Moment from "moment";
+import * as MomentRange from "moment-range";
 
 export const getDaysInAMonth = (year: number, month: number) => {
-  const moment = extendMoment(Moment);
+  const moment = MomentRange.extendMoment(Moment);
   const startDate = moment([year, month]);
   const firstDay = moment(startDate).startOf("month");
   const endDay = moment(startDate).endOf("month");
