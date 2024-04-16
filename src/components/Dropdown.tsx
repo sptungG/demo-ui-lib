@@ -374,7 +374,7 @@ const OptionAll = styled.div`
 
 const ListItem = styled.div<{ _width: number | undefined }>`
   max-height: ${({ theme }) => theme.pxToRem(160)};
-  width: ${({ theme, _width }) => (_width ? theme.pxToRem(_width) : undefined)};
+  /* width: ${({ theme, _width }) => (_width ? theme.pxToRem(_width) : undefined)}; */
   overflow: hidden auto;
   border-radius: 3px;
   padding: 0 ${({ theme }) => theme.pxToRem(4)};
