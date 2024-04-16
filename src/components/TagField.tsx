@@ -322,7 +322,6 @@ const TagField = ({
           onClose={handleClose}
           reference={activatorRef}
           placement={"bottom-start"}
-          width={theme.pxToRem(activatorRef.current?.clientWidth)}
           data-list={uid}
         >
           <ListItem ref={containerListItemRef}>
