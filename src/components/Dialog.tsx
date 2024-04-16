@@ -82,7 +82,15 @@ const StyledDialogTitle = styled.div<DialogTitleProps>`
 `;
 
 const DialogTitle = memo(
-  ({ children, divider, haveBackButton, onBack, hiddenCloseButton, onClose, ...props }: DialogTitleProps) => {
+  ({
+    children,
+    divider,
+    haveBackButton,
+    onBack,
+    hiddenCloseButton,
+    onClose,
+    ...props
+  }: DialogTitleProps) => {
     const { dismissModal } = useModal();
     return (
       <StyledDialogTitle divider={divider} {...props}>
@@ -93,7 +101,12 @@ const DialogTitle = memo(
         ) : null}
         {children}
         {hiddenCloseButton ? null : (
-          <StyledCloseButton size="small" variant="text" divider={divider} onClick={onClose ? onClose : dismissModal}>
+          <StyledCloseButton
+            size="small"
+            variant="text"
+            divider={divider}
+            onClick={onClose ? onClose : dismissModal}
+          >
             <CloseIcon />
           </StyledCloseButton>
         )}
@@ -111,7 +124,7 @@ const StyledDialogContent = styled.div<DialogContentProps>`
     ${({ theme, padding }) => (!isNil(padding) ? padding : theme.pxToRem(16))}
     ${({ theme, padding }) => (!isNil(padding) ? padding : theme.pxToRem(24))};
   box-sizing: border-box;
-  max-height: calc(100vh - ${({ theme }) => theme.pxToRem(200)});
+  max-height: calc(100dvh - ${({ theme }) => theme.pxToRem(200)});
   overflow: auto;
 
   &::-webkit-scrollbar {

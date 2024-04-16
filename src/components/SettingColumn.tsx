@@ -158,7 +158,7 @@ const SettingColumn = React.forwardRef<SettingColumnRef, SettingColumnProps>(
               <Typography padding="16px" color="#000000" fontWeight="medium" variant="h6">
                 Thêm cột hiển thị
               </Typography>
-              <Box maxHeight="calc(100vh - 360px)" borderTop="1px solid #f3f4f5">
+              <Box maxHeight="calc(100dvh - 360px)" borderTop="1px solid #f3f4f5">
                 {searchable && (
                   <Box padding="8px 16px 4px 16px">
                     <SearchBox
@@ -357,7 +357,7 @@ const BoxMenuList = styled.div<{ refContentBoxHeight: any }>`
       background-color: ${({ theme }) => theme.palette.ink[40]};
     }
   }
-  max-height: calc(100vh - 412px);
+  max-height: calc(100dvh - 412px);
   min-height: 200px;
 `;
 
@@ -374,7 +374,7 @@ const BoxSelectedList = styled.div`
       background-color: ${({ theme }) => theme.palette.ink[40]};
     }
   }
-  max-height: calc(100vh - 412px);
+  max-height: calc(100dvh - 412px);
   min-height: 200px;
 `;
 const MenuList = styled.div<{ disabled?: boolean }>`
@@ -408,7 +408,7 @@ const Item = styled.div`
     }
   }
   min-height: 200px;
-  max-height: calc(100vh - 360px);
+  max-height: calc(100dvh - 360px);
 `;
 const ColumSelect = styled.div`
   padding: 8px 16px;

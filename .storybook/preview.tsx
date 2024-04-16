@@ -9,7 +9,7 @@ const preview: Preview = {
     docs: {
       theme: themes.normal,
     },
-    layout: "padded",
+    layout: "fullscreen",
   },
   decorators: [
     (Story: any) => {

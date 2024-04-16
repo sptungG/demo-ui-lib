@@ -21,7 +21,7 @@ const TemplateConfirmDialog: StoryFn<typeof ConfirmDialog> = (args: ConfirmDialo
     });
   };
   return (
-    <Box.type height="100vh" width="100vw">
+    <Box.type height="100dvh" width="100dvw">
       <Button.type onClick={handleOpen}>Open</Button.type>
     </Box.type>
   );

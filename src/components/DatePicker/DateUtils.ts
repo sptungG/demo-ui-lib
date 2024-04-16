@@ -6,7 +6,7 @@ export const getDaysInAMonth = (year: number, month: number) => {
   const startDate = moment([year, month]);
   const firstDay = moment(startDate).startOf("month");
   const endDay = moment(startDate).endOf("month");
-  const monthRange = moment.range(firstDay, endDay);
+  const monthRange = moment?.range(firstDay, endDay);
   const weeks: Moment.Moment[] = [];
   const days = Array.from(monthRange.by("day"));
   days.forEach((it) => {

@@ -4,6 +4,6 @@ import theme from "./theme";
 addons.setConfig({
   showNav: true,
   showPanel: true,
-  panelPosition: "right",
+  panelPosition: "bottom",
   theme: theme,
 });
