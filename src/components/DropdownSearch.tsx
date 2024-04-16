@@ -142,7 +142,8 @@ const DropdownSearch = (props: DropdownSearchProps) => {
           setOptions(res.data);
           if (containerListItemRef.current) containerListItemRef.current.scrollTop = 0;
           setTimeout(() => {
-            let listSuggestItem = containerListItemRef.current?.querySelectorAll(`[data-event='true']`);
+            let listSuggestItem =
+              containerListItemRef.current?.querySelectorAll(`[data-event='true']`);
             if (listSuggestItem && listSuggestItem.length > 0 && res.data) {
               listSuggestItem.forEach((item) => {
                 if (item.classList.contains("focused")) {
@@ -237,7 +238,11 @@ const DropdownSearch = (props: DropdownSearchProps) => {
   const isSelected = useCallback(
     (option: any) => {
       if (isNil(value)) return false;
-      if (multiple && isArray(value) && !!value.filter((e: any) => e[uniqueKey] === option[uniqueKey])?.[0])
+      if (
+        multiple &&
+        isArray(value) &&
+        !!value.filter((e: any) => e[uniqueKey] === option[uniqueKey])?.[0]
+      )
         return true;
       return (value as any)[uniqueKey] === option[uniqueKey];
     },
@@ -308,7 +313,11 @@ const DropdownSearch = (props: DropdownSearchProps) => {
                 } else {
                   indexFocus = i !== 0 ? i - 1 : 0;
                 }
-                listSuggestItem[indexFocus].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+                listSuggestItem[indexFocus].scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "start",
+                });
                 listSuggestItem[indexFocus].classList.add("focused");
                 break;
               }
@@ -383,7 +392,11 @@ const DropdownSearch = (props: DropdownSearchProps) => {
             ref={inputRef}
           />
           {multiple && isArray(value) && value.length > 0 ? (
-            <Chip size="small" label={theme.i18n("count_selected", { num: value.length })} onDelete={handleRemoveAll} />
+            <Chip
+              size="small"
+              label={theme.i18n("count_selected", { num: value.length })}
+              onDelete={handleRemoveAll}
+            />
           ) : null}
         </Toolbar>
       )}
@@ -484,7 +497,8 @@ const DropdownSearch = (props: DropdownSearchProps) => {
           onClose={handleClose}
           reference={activatorRef}
           placement={placement}
-          width={popperWidth || theme.pxToRem(activatorRef.current?.clientWidth || 0)}
+          // width={popperWidth || theme.pxToRem(activatorRef.current?.clientWidth || 0)}
+          width={popperWidth}
           data-list={uid}
         >
           {Content}
@@ -589,6 +603,4 @@ const ListItem = styled.div`
   &::-webkit-scrollbar-track {
     background: ${({ theme }) => theme.palette.ink["20"]};
   }
-
-,
 `;
