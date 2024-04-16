@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import SearchBox from "../../components/SearchBox";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/SearchBox",
   component: SearchBox,
   argTypes: {},
-} as ComponentMeta<typeof SearchBox>;
+} as Meta<typeof SearchBox>;
 
-const Template: ComponentStory<typeof SearchBox> = (args) => {
+const Template: StoryFn<typeof SearchBox> = (args) => {
   const [query, setQuery] = useState("");
   return <SearchBox {...args} value={query} onChange={setQuery} />;
 };
@@ -25,7 +25,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateWithButton: ComponentStory<typeof SearchBox> = (args) => {
+const TemplateWithButton: StoryFn<typeof SearchBox> = (args) => {
   const [query, setQuery] = useState("");
   return <SearchBox {...args} value={query} onChange={setQuery} />;
 };

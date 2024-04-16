@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import DatePickerShortRange from "../../components/DatePicker/DatePickerShortRange";
 import { Button } from "../../index";
 import { ActivatorDatePickerProps } from "../../components/DatePicker";
@@ -8,9 +8,9 @@ export default {
   title: "Components/DatePickerShortRange",
   component: DatePickerShortRange.type,
   argTypes: {},
-} as ComponentMeta<typeof DatePickerShortRange>;
+} as Meta<typeof DatePickerShortRange>;
 
-const Template: ComponentStory<typeof DatePickerShortRange> = (args) => {
+const Template: StoryFn<typeof DatePickerShortRange> = (args) => {
   const [date, setDate] = useState<Date | null>();
   const [lastDate, setLastDate] = useState<Date | null>();
   return (
@@ -37,7 +37,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateCustom: ComponentStory<typeof DatePickerShortRange> = (args) => {
+const TemplateCustom: StoryFn<typeof DatePickerShortRange> = (args) => {
   const [date, setDate] = useState<Date | null>();
   const [lastDate, setLastDate] = useState<Date | null>();
   const renderActivator = useCallback(

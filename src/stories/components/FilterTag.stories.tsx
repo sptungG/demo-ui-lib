@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import FilterTag, { DataSource } from "../../components/FilterTag";
 import Box from "../../components/Box";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/FilterTag",
   component: FilterTag,
   argTypes: {},
-} as ComponentMeta<typeof FilterTag>;
+} as Meta<typeof FilterTag>;
 
-const Template: ComponentStory<typeof FilterTag> = (args) => {
+const Template: StoryFn<typeof FilterTag> = (args) => {
   const [selected, setSelected] = useState<any>(null);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -50,7 +50,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateCustom: ComponentStory<typeof FilterTag> = (args) => {
+const TemplateCustom: StoryFn<typeof FilterTag> = (args) => {
   const [selected, setSelected] = useState<any>(null);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -91,7 +91,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateCustomNoData: ComponentStory<typeof FilterTag> = (args) => {
+const TemplateCustomNoData: StoryFn<typeof FilterTag> = (args) => {
   const [selected, setSelected] = useState<any>(null);
   const handleFetchOptions = useCallback(async (query: string, page: number) => {
     return Promise.resolve({

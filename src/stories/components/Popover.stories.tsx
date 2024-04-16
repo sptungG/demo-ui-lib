@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Popover from "../../components/Popover";
 import { Box, Button } from "../../index";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/Popover",
   component: Popover,
   argTypes: {},
-} as ComponentMeta<typeof Popover>;
+} as Meta<typeof Popover>;
 
-const Template: ComponentStory<typeof Popover> = (args) => {
+const Template: StoryFn<typeof Popover> = (args) => {
   const ref = useRef<HTMLButtonElement | null>(null);
   const [open, setOpen] = useState(false);
 

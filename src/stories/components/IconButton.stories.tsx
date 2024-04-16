@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import IconButton from "../../components/IconButton";
 import CircleCheckOutlineIcon from "../../assets/svgr/CircleCheckOutlineIcon";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/IconButton",
   component: IconButton,
   argTypes: {},
-} as ComponentMeta<typeof IconButton>;
+} as Meta<typeof IconButton>;
 
-const Template: ComponentStory<typeof IconButton> = (args) => <IconButton.type {...args} />;
+const Template: StoryFn<typeof IconButton> = (args) => <IconButton.type {...args} />;
 
 export const Basic = Template.bind({});
 Basic.storyName = "default";

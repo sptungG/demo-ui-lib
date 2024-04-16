@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Textarea from "../../components/Textarea";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/Textarea",
   component: Textarea,
   argTypes: {},
-} as ComponentMeta<typeof Textarea>;
+} as Meta<typeof Textarea>;
 
-const Template: ComponentStory<typeof Textarea> = (args) => {
+const Template: StoryFn<typeof Textarea> = (args) => {
   const [text, setText] = useState("");
   const handleChange = useCallback((value) => setText(value), []);
   return <Textarea.type {...args} required value={text} onChange={handleChange} />;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import TimePicker from "../../components/TimePicker";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/TimePicker",
   component: TimePicker,
   argTypes: {},
-} as ComponentMeta<typeof TimePicker>;
+} as Meta<typeof TimePicker>;
 
-const Template: ComponentStory<typeof TimePicker> = (args) => {
+const Template: StoryFn<typeof TimePicker> = (args) => {
   const [date, setDate] = useState<Date | null>();
   return <TimePicker.type {...args} value={date} onChange={setDate} />;
 };
@@ -23,7 +23,7 @@ Basic.parameters = {
   },
 };
 
-const RangeTemplate: ComponentStory<typeof TimePicker> = (args) => {
+const RangeTemplate: StoryFn<typeof TimePicker> = (args) => {
   const [startTime, setStartTime] = useState<Date | null>();
   const [endTime, setEndTime] = useState<Date | null>();
   return (

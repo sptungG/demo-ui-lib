@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import React, { useState } from "react";
 import Box from "../../components/Box";
 import Button from "../../components/Button";
@@ -13,8 +13,8 @@ export default {
   title: "Components/SettingColumn",
   component: SettingColumn,
   argTypes: {},
-} as ComponentMeta<typeof SettingColumn>;
-const Template: ComponentStory<typeof SettingColumn> = (args) => {
+} as Meta<typeof SettingColumn>;
+const Template: StoryFn<typeof SettingColumn> = (args) => {
   const [settingColumns, setSettingColumns] = useState<Record<string, boolean>>(SettingColumnsDefault);
   const { openModal } = useModal();
   const [addNewToTop, setAddNewToTop] = useState<string>("1");

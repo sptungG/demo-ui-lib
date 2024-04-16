@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Link from "../../components/Link";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/Link",
   component: Link,
   argTypes: {},
-} as ComponentMeta<typeof Link>;
+} as Meta<typeof Link>;
 
-const Template: ComponentStory<typeof Link> = (args) => <Link.type {...args} />;
+const Template: StoryFn<typeof Link> = (args) => <Link.type {...args} />;
 
 export const Basic = Template.bind({});
 Basic.storyName = "default";

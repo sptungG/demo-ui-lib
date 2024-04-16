@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import ButtonGroup, { ButtonGroupProps } from "../../components/ButtonGroup";
 import Button from "../../components/Button";
 import ArrowCaretDownIcon from "../../assets/svgr/ArrowCaretDownIcon";
@@ -13,9 +13,9 @@ export default {
     Button,
   },
   argTypes: {},
-} as ComponentMeta<React.FC<ButtonGroupProps>>;
+} as Meta<React.FC<ButtonGroupProps>>;
 
-const Template: ComponentStory<React.FC<ButtonGroupProps>> = (args) => (
+const Template: StoryFn<React.FC<ButtonGroupProps>> = (args) => (
   <ButtonGroup.type {...args}>
     <Button.type startIcon={<PlusCircleIcon />}>Button</Button.type>
     <Button.type startIcon={<ArrowCaretDownIcon style={{ position: "absolute" }} />} width={40} />

@@ -1,14 +1,14 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import ProgressStep, { ProgressStepDescriptor, ProgressStepProps } from "../../components/ProgressStep";
 
 export default {
   title: "Components/ProgressStep",
   component: ProgressStep.type,
   argTypes: {},
-} as ComponentMeta<React.FC<ProgressStepProps>>;
+} as Meta<React.FC<ProgressStepProps>>;
 
-const Template: ComponentStory<React.FC<ProgressStepProps>> = (args) => {
+const Template: StoryFn<React.FC<ProgressStepProps>> = (args) => {
   const steps: ProgressStepDescriptor[] = [
     {
       id: 1,

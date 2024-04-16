@@ -8,6 +8,7 @@ import { TableHeadContext } from "./TableHead";
 import { createContext, useContextSelector } from "use-context-selector";
 import styled, { css } from "styled-components";
 import { difference, toString, uniqBy } from "lodash";
+import { TableDrillDown } from "./TableDrillDown";
 
 export interface TableRowProps {
   item?: any;
@@ -58,14 +59,19 @@ const TableRow = memo(
     const valueProvider = useMemo<TableRowContextType>(() => ({ item: item }), [item]);
 
     const columnsVisible = useMemo(
-      () => settingColumns && Object.keys(settingColumns).flatMap((e) => (settingColumns[e] ? e : [])),
+      () =>
+        settingColumns && Object.keys(settingColumns).flatMap((e) => (settingColumns[e] ? e : [])),
       [settingColumns]
     );
     const cells = useMemo(() => uniqBy(cellsInRow, "field"), [cellsInRow]);
     const cellSorted = useMemo(
       () =>
         cells
-          .filter((cell) => !columnsVisible || difference(columnsVisible, [cell.field]).length < columnsVisible.length)
+          .filter(
+            (cell) =>
+              !columnsVisible ||
+              difference(columnsVisible, [cell.field]).length < columnsVisible.length
+          )
           .sort(function (a, b) {
             const fieldA = a.field;
             const fieldB = b.field;
@@ -100,7 +106,8 @@ const TableRow = memo(
     const calculatorRowSpan = (cell: TableCellProps): number => {
       if (!cell.isSubCell && (!cell.subCells || cell?.subCells?.length === 0)) return totalRowSpan;
       else if (!cell.isSubCell && cell.subCells) return 1;
-      else if (!cell.subCells || cell?.subCells?.length === 0) return cell.depth ? totalRowSpan + 1 - cell.depth : 1;
+      else if (!cell.subCells || cell?.subCells?.length === 0)
+        return cell.depth ? totalRowSpan + 1 - cell.depth : 1;
       return 1;
     };
     const colSpanBulkAction = useMemo(
@@ -138,7 +145,11 @@ const TableRow = memo(
           <TableRowContext.Provider value={valueProvider}>
             {(isHaveSettingColumns || selectable || !!onOpenDrillDown) && !hiddenToolbar ? (
               variant === "head" ? (
-                <TableHeadCellToolbar key="head" isSelected={isSelected} isIndeterminate={isIndeterminate} />
+                <TableHeadCellToolbar
+                  key="head"
+                  isSelected={isSelected}
+                  isIndeterminate={isIndeterminate}
+                />
               ) : (
                 <TableCellToolbar
                   key={`TCT-${item[uniqueKey]}`}
@@ -182,7 +193,9 @@ const TableRow = memo(
             {...drillDownProps}
             item={item}
             tableTheme={tableTheme}
-            colSpan={cellSorted.length + (isHaveSettingColumns || selectable || !!onOpenDrillDown ? 1 : 0)}
+            colSpan={
+              cellSorted.length + (isHaveSettingColumns || selectable || !!onOpenDrillDown ? 1 : 0)
+            }
             collapse={collapseDrillDown}
             resultOnOpen={resultOnOpenDrillDown}
           />
@@ -192,7 +205,7 @@ const TableRow = memo(
   }
 );
 
-const StyledTableRow = styled.tr<{
+export const StyledTableRow = styled.tr<{
   variant?: string;
   tableTheme?: TableTheme;
   isOpenDrillDown?: boolean;
@@ -246,49 +259,3 @@ const StyledTableRow = styled.tr<{
 
 TableRow.displayName = "TableRow";
 export default TableRow;
-
-interface TableDrillDownProps extends React.PropsWithChildren<{}> {
-  item?: any;
-  tableTheme?: TableTheme;
-  colSpan?: number;
-  resultOnOpen?: any;
-  collapse?: () => void;
-}
-
-export interface TableDrillDownTemplate<T> {
-  item: T;
-  resultOnOpen: any;
-  collapse: () => void;
-}
-
-const TableDrillDown = memo(
-  ({ children, item = {}, colSpan, tableTheme, resultOnOpen = {}, collapse }: TableDrillDownProps) => {
-    const childrenWithProps = useMemo(
-      () =>
-        typeof children === "function"
-          ? children({
-              item,
-              resultOnOpen,
-              collapse,
-            } as TableDrillDownTemplate<any>)
-          : children,
-      [item, resultOnOpen, collapse]
-    );
-    return (
-      <StyledTableRow isOpenDrillDown={true}>
-        <StyledCellDrillDown colSpan={colSpan} tableTheme={tableTheme}>
-          {childrenWithProps}
-        </StyledCellDrillDown>
-      </StyledTableRow>
-    );
-  }
-);
-
-const StyledCellDrillDown = styled.td<TableDrillDownProps>`
-  border-bottom: ${({ theme, tableTheme }) =>
-    tableTheme === "dark" ? `1px solid #243041` : `1px solid ${theme.palette.ink["30"]}`};
-`;
-
-TableDrillDown.displayName = "TableDrillDown";
-
-export { TableDrillDown };

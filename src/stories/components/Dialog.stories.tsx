@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Box, Button, Dialog, useModal } from "../../index";
 import TextField from "../../components/TextField";
 import { DialogActions, DialogContent, DialogProps, DialogTitle } from "../../components/Dialog";
@@ -11,9 +11,9 @@ export default {
   component: Dialog.type,
   subcomponents: { DialogTitle, DialogContent, DialogActions },
   argTypes: {},
-} as ComponentMeta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
-const TemplateConfirmDialog: ComponentStory<typeof ConfirmDialog> = (args: ConfirmDialogProps) => {
+const TemplateConfirmDialog: StoryFn<typeof ConfirmDialog> = (args: ConfirmDialogProps) => {
   const { confirm } = useModal();
   const handleOpen = () => {
     confirm(args, async () => {
@@ -41,7 +41,7 @@ Confirm.parameters = {
   },
 };
 
-const TemplateWidthBack: ComponentStory<typeof Dialog> = (args: DialogProps) => {
+const TemplateWidthBack: StoryFn<typeof Dialog> = (args: DialogProps) => {
   const { openModal } = useModal();
   const DialogDoSomething = () => {
     const { dismissModal, closeAllModal } = useModal();
@@ -82,7 +82,7 @@ Back.parameters = {
   },
 };
 
-const TemplateAdvance: ComponentStory<typeof Dialog> = (args: DialogProps) => {
+const TemplateAdvance: StoryFn<typeof Dialog> = (args: DialogProps) => {
   const { openModal } = useModal();
   const DialogDoSomething = () => {
     const { closeModal, dismissModal } = useModal();

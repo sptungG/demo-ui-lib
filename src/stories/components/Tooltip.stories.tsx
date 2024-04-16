@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, Link, Tooltip, Typography } from "../../index";
 import Box from "../../components/Box";
 import { Placement, placements } from "@popperjs/core";
@@ -13,9 +13,9 @@ export default {
   id: "Tooltip",
   title: "Components/Tooltip",
   argTypes: {},
-} as ComponentMeta<React.FC<TooltipProps>>;
+} as Meta<React.FC<TooltipProps>>;
 
-const Template: ComponentStory<React.FC<TooltipProps>> = (args) => (
+const Template: StoryFn<React.FC<TooltipProps>> = (args) => (
   <Box.type margin="100px 300px" display="flex">
     <Typography.type width="fit-content" {...args} />
   </Box.type>
@@ -41,7 +41,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateCustom: ComponentStory<React.FC<TooltipProps>> = (args) => {
+const TemplateCustom: StoryFn<React.FC<TooltipProps>> = (args) => {
   const [num, setNum] = useState(0);
   const [open, setOpen] = useState(false);
   const [rad, setRad] = useState(false);

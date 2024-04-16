@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import DropdownSearch, { ActivatorDropdownSearchProps } from "../../components/DropdownSearch";
 import Button from "../../components/Button";
 import { DataSource } from "../../components/DropdownInfinite";
@@ -8,7 +8,7 @@ export default {
   title: "Components/DropdownSearch",
   component: DropdownSearch,
   argTypes: {},
-} as ComponentMeta<typeof DropdownSearch>;
+} as Meta<typeof DropdownSearch>;
 
 const data = [
   { id: 1, name: "Tiền mặt" },
@@ -22,7 +22,7 @@ const data = [
   { id: 9, name: "Techcombank" },
 ];
 
-const Template: ComponentStory<typeof DropdownSearch> = (args) => {
+const Template: StoryFn<typeof DropdownSearch> = (args) => {
   const handleFetchOptions = useCallback(
     () =>
       ({
@@ -56,7 +56,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateSearchMulti: ComponentStory<typeof DropdownSearch> = (args) => {
+const TemplateSearchMulti: StoryFn<typeof DropdownSearch> = (args) => {
   const handleFetchOptions = useCallback(
     () =>
       ({
@@ -91,7 +91,7 @@ Multiple.parameters = {
   },
 };
 
-const TemplateSearchPagination: ComponentStory<typeof DropdownSearch> = (args) => {
+const TemplateSearchPagination: StoryFn<typeof DropdownSearch> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -130,7 +130,7 @@ Pagination.parameters = {
   },
 };
 
-const TemplateSubmit: ComponentStory<typeof DropdownSearch> = (args) => {
+const TemplateSubmit: StoryFn<typeof DropdownSearch> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -161,7 +161,7 @@ const TemplateSubmit: ComponentStory<typeof DropdownSearch> = (args) => {
   );
 };
 
-const TemplateInline: ComponentStory<typeof DropdownSearch> = (args) => {
+const TemplateInline: StoryFn<typeof DropdownSearch> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -210,7 +210,7 @@ Submit.parameters = {
   },
 };
 
-const TemplateCustom: ComponentStory<typeof DropdownSearch> = (args) => {
+const TemplateCustom: StoryFn<typeof DropdownSearch> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {

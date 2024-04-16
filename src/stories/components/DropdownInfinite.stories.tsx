@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import DropdownInfinite, { DataSource } from "../../components/DropdownInfinite";
 import { ActivatorDropdownInfiniteProps } from "../../index";
 import Button from "../../components/Button";
@@ -8,9 +8,9 @@ export default {
   title: "Components/DropdownInfinite",
   component: DropdownInfinite,
   argTypes: {},
-} as ComponentMeta<typeof DropdownInfinite>;
+} as Meta<typeof DropdownInfinite>;
 
-const Template: ComponentStory<typeof DropdownInfinite> = (args) => {
+const Template: StoryFn<typeof DropdownInfinite> = (args) => {
   const [selected, setSelected] = useState<any>(null);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -47,7 +47,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateMultiple: ComponentStory<typeof DropdownInfinite> = (args) => {
+const TemplateMultiple: StoryFn<typeof DropdownInfinite> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -99,7 +99,7 @@ Searchable.parameters = {
   },
 };
 
-const TemplateInline: ComponentStory<typeof DropdownInfinite> = (args) => {
+const TemplateInline: StoryFn<typeof DropdownInfinite> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {
@@ -140,7 +140,7 @@ Inline.parameters = {
   },
 };
 
-const TemplateOverrideActivator: ComponentStory<typeof DropdownInfinite> = (args) => {
+const TemplateOverrideActivator: StoryFn<typeof DropdownInfinite> = (args) => {
   const [selected, setSelected] = useState<any>(null);
   const handleFetchOptions = useCallback(
     async (query: string, page: number) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Alert from "../../components/Alert";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/Alert",
   component: Alert,
   argTypes: {},
-} as ComponentMeta<typeof Alert>;
+} as Meta<typeof Alert>;
 
-const Template: ComponentStory<typeof Alert> = (args) => <Alert.type {...args} />;
+const Template: StoryFn<typeof Alert> = (args) => <Alert.type {...args} />;
 
 export const Basic = Template.bind({});
 Basic.storyName = "default";

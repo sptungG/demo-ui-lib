@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import TagField from "../../components/TagField";
 import { DataSource } from "../../components/DropdownInfinite";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/TagField",
   component: TagField,
   argTypes: {},
-} as ComponentMeta<typeof TagField>;
+} as Meta<typeof TagField>;
 
-const Template: ComponentStory<typeof TagField> = (args) => {
+const Template: StoryFn<typeof TagField> = (args) => {
   const [tags, setTags] = useState<string[]>([]);
   const handleChange = useCallback((tags) => {
     setTags(tags);

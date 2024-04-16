@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import CheckBox, { CheckBoxProps } from "../../components/Checkbox";
 
 export default {
   title: "Components/CheckBox",
   component: CheckBox.type,
   argTypes: {},
-} as ComponentMeta<React.FC<CheckBoxProps>>;
+} as Meta<React.FC<CheckBoxProps>>;
 
-const Template: ComponentStory<React.FC<CheckBoxProps>> = (args) => {
+const Template: StoryFn<React.FC<CheckBoxProps>> = (args) => {
   const [checked, setChecked] = useState(false);
   return <CheckBox.type checked={checked} {...args} onChange={setChecked} />;
 };

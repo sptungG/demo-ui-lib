@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import NumberField from "../../components/NumberField";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/NumberField",
   component: NumberField,
   argTypes: {},
-} as ComponentMeta<typeof NumberField>;
+} as Meta<typeof NumberField>;
 
-const Template: ComponentStory<typeof NumberField> = (args) => {
+const Template: StoryFn<typeof NumberField> = (args) => {
   const [price, setPrice] = useState<number>();
   return <NumberField.type {...args} label="Giá bán" tooltip="Tooltip gợi ý" value={price} onChange={setPrice} />;
 };

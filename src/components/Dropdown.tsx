@@ -56,11 +56,11 @@ export interface DropdownProps extends MarginSpacing, HorizontalSizing {
   backgroundColor?: CSSObject["backgroundColor"];
 }
 
-export interface ActivatorDropdownProps {
+export type ActivatorDropdownProps = {
   reference: React.MutableRefObject<any>;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => any;
   open: boolean;
-}
+};
 
 const Dropdown = ({
   uniqueKey = "id",
@@ -112,7 +112,9 @@ const Dropdown = ({
   useEffect(() => {
     listItemRef = document.getElementById(idListItem);
     firstSelectedRef = value
-      ? listItemRef?.querySelector(`[data-value='${isArray(value) ? value[0]?.[uniqueKey] : value[uniqueKey]}']`)
+      ? listItemRef?.querySelector(
+          `[data-value='${isArray(value) ? value[0]?.[uniqueKey] : value[uniqueKey]}']`
+        )
       : undefined;
   });
 
@@ -167,7 +169,11 @@ const Dropdown = ({
   const isSelected = useCallback(
     (option: any) => {
       if (isNil(value)) return false;
-      if (multiple && isArray(value) && !!value.filter((e: any) => e[uniqueKey] === option[uniqueKey])?.[0])
+      if (
+        multiple &&
+        isArray(value) &&
+        !!value.filter((e: any) => e[uniqueKey] === option[uniqueKey])?.[0]
+      )
         return true;
       return (value as any)[uniqueKey] === option[uniqueKey];
     },
@@ -221,7 +227,11 @@ const Dropdown = ({
                   indexFocus = i !== 0 ? i - 1 : 0;
                 }
                 setTimeout(() => {
-                  listSuggestItem[indexFocus].scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
+                  listSuggestItem[indexFocus].scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    inline: "start",
+                  });
                   listSuggestItem[indexFocus].classList.add("focused");
                 });
                 break;

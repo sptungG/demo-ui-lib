@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Table, { TableColumn, SortDirection, TableDrillDownTemplate, TableDrillDown } from "../../components/Table";
 import Link from "../../components/Link";
 import Chip from "../../components/Chip";
@@ -13,7 +13,7 @@ export default {
   title: "Components/Table",
   component: Table,
   argTypes: {},
-} as ComponentMeta<typeof Table>;
+} as Meta<typeof Table>;
 
 function createData(
   id: number,
@@ -97,7 +97,7 @@ const settingColumns: Record<string, boolean> = {
   status: true,
 };
 
-const Template: ComponentStory<typeof Table> = (args) => {
+const Template: StoryFn<typeof Table> = (args) => {
   return (
     <TableBasic>
       <TableHeadBasic>
@@ -137,7 +137,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateSmall: ComponentStory<typeof Table> = (args) => {
+const TemplateSmall: StoryFn<typeof Table> = (args) => {
   return (
     <Table.type {...args} items={foods}>
       <TableColumn field="name" title="Dessert (100g serving)">
@@ -163,7 +163,7 @@ Small.parameters = {
   },
 };
 
-const TemplateGroupColumn: ComponentStory<typeof Table> = (args) => {
+const TemplateGroupColumn: StoryFn<typeof Table> = (args) => {
   return (
     <Table.type {...args} items={foods}>
       <TableColumn field="name" title="Dessert (100g serving)">
@@ -191,7 +191,7 @@ GroupColumn.parameters = {
   },
 };
 
-const TemplateSettingGroupColumn: ComponentStory<typeof Table> = (args) => {
+const TemplateSettingGroupColumn: StoryFn<typeof Table> = (args) => {
   const handleToggleSettings = useCallback(() => {}, []);
   return (
     <Table.type {...args} items={foods} onToggleSettings={handleToggleSettings} settingColumns={settingColumns}>
@@ -220,7 +220,7 @@ SettingColumn.parameters = {
   },
 };
 
-const TemplateGroupColumnCustom: ComponentStory<typeof Table> = (args) => {
+const TemplateGroupColumnCustom: StoryFn<typeof Table> = (args) => {
   const handleToggleSettings = useCallback(() => {}, []);
   return (
     <Table.type
@@ -257,7 +257,7 @@ DarkTheme.parameters = {
   },
 };
 
-const TemplateSortable: ComponentStory<typeof Table> = (args) => {
+const TemplateSortable: StoryFn<typeof Table> = (args) => {
   const [filter, setFilter] = useState<{
     sortBy?: string;
     sortDirection?: SortDirection;
@@ -294,7 +294,7 @@ Sortable.parameters = {
   },
 };
 
-const TemplateDrillDown: ComponentStory<typeof Table> = (args) => {
+const TemplateDrillDown: StoryFn<typeof Table> = (args) => {
   const [filter, setFilter] = useState<{
     sortBy?: string;
     sortDirection?: SortDirection;
@@ -347,7 +347,7 @@ DrillDown.parameters = {
   },
 };
 
-const TemplateSelectable: ComponentStory<typeof Table> = (args) => {
+const TemplateSelectable: StoryFn<typeof Table> = (args) => {
   const [selectedItems, setSelectedItems] = useState<FoodType[]>([]);
   return (
     <Table.type {...args} items={foods} selectable selectedItems={selectedItems} onSelectionChange={setSelectedItems}>
@@ -406,7 +406,7 @@ Selectable.parameters = {
   },
 };
 
-const TemplateOftenUsed: ComponentStory<typeof Table> = (args) => {
+const TemplateOftenUsed: StoryFn<typeof Table> = (args) => {
   const [selectedItems, setSelectedItems] = useState<FoodType[]>([]);
   const handleToggleSettings = useCallback(async () => {}, []);
   const [filter, setFilter] = useState({

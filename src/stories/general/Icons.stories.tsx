@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import * as IconSet from "../../assets/svgr";
 import SearchBox from "../../components/SearchBox";
 import Typography from "../../components/Typography";
@@ -9,15 +9,15 @@ import { Box, Popover } from "../../index";
 export default {
   title: "General/Icons",
   argTypes: {},
-} as ComponentMeta<any>;
+} as Meta<any>;
 
 const Icons = () => {
-  let IconArray: any = [];
   const [query, setQuery] = useState("check");
-  Object.keys(IconSet).forEach(function (icon: any) {
-    let IconName: any = (IconSet as any)[icon];
-    IconArray.push(IconName);
+  const IconArray = Object.keys(IconSet).map(function (icon: any) {
+    const IconName: any = (IconSet as any)[icon];
+    return IconName;
   });
+
   const [copied, setCopied] = useState("");
   function copyToClipboard(textToCopy: string) {
     // navigator clipboard api needs a secure context (https)
@@ -26,7 +26,7 @@ const Icons = () => {
       return navigator.clipboard.writeText(textToCopy);
     } else {
       // text area method
-      let textArea = document.createElement("textarea");
+      const textArea = document.createElement("textarea");
       textArea.value = textToCopy;
       // make the textarea out of viewport
       textArea.style.position = "fixed";
@@ -50,14 +50,14 @@ const Icons = () => {
       <StyledContainer>
         {IconArray
           ? IconArray.map((Icon: any, idx: number) => {
-              if (Icon.displayName.slice(3).toLowerCase().includes(query.toLowerCase())) {
+              if (Icon.name.slice(3).toLowerCase().includes(query.toLowerCase())) {
                 return (
                   <StyledIconsContainer
                     key={idx}
-                    id={`${Icon.displayName}`}
+                    id={`${Icon.name}`}
                     onClick={() => {
-                      copyToClipboard(Icon.displayName.slice(3)).then(() => {
-                        setCopied(Icon.displayName);
+                      copyToClipboard(Icon.name.slice(3)).then(() => {
+                        setCopied(Icon.name);
                       });
                     }}
                     onMouseLeave={() => setCopied("")}
@@ -66,7 +66,7 @@ const Icons = () => {
                       <Icon />
                     </StyledIcons>
                     <Typography width="fit-content" maxWidth="100%" noWrap>
-                      {Icon.displayName.slice(3)}
+                      {Icon.name?.slice(3)}
                     </Typography>
                   </StyledIconsContainer>
                 );
@@ -150,7 +150,7 @@ const StyledIcons = styled.div`
   }
 `;
 
-const Template: ComponentStory<typeof Icons> = () => <Icons />;
+const Template: StoryFn<typeof Icons> = () => <Icons />;
 
 export const Basic = Template.bind({});
 Basic.storyName = "Icons";

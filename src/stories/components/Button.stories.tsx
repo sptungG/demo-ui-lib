@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Button, { ButtonProps } from "../../components/Button";
 import UploadIcon from "../../assets/svgr/UploadIcon";
 import ArrowCaretDownIcon from "../../assets/svgr/ArrowCaretDownIcon";
@@ -9,9 +9,9 @@ export default {
   title: "Components/Button",
   component: Button.type,
   argTypes: {},
-} as ComponentMeta<React.FC<ButtonProps>>;
+} as Meta<React.FC<ButtonProps>>;
 
-const Template: ComponentStory<React.FC<ButtonProps>> = (args) => {
+const Template: StoryFn<React.FC<ButtonProps>> = (args) => {
   return <Button.type {...args} />;
 };
 
@@ -63,7 +63,7 @@ IconOnlyButton.parameters = {
   },
 };
 
-const TemplateBtnLoading: ComponentStory<React.FC<ButtonProps>> = (args) => {
+const TemplateBtnLoading: StoryFn<React.FC<ButtonProps>> = (args) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const handleOnClick = () => {
     setIsLoading(true);

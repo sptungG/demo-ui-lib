@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import LinearProgress, { LinearProgressProps } from "../../components/LinearProgress";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/LinearProgress",
   component: LinearProgress.type,
   argTypes: {},
-} as ComponentMeta<React.FC<LinearProgressProps>>;
+} as Meta<React.FC<LinearProgressProps>>;
 
-const Template: ComponentStory<React.FC<LinearProgressProps>> = (args) => {
+const Template: StoryFn<React.FC<LinearProgressProps>> = (args) => {
   const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {

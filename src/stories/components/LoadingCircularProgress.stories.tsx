@@ -1,14 +1,14 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import LoadingCircularProgress from "../../components/LoadingCircularProgress";
 
 export default {
   title: "Components/LoadingCircularProgress",
   component: LoadingCircularProgress.type,
   argTypes: {},
-} as ComponentMeta<typeof LoadingCircularProgress>;
+} as Meta<typeof LoadingCircularProgress>;
 
-const Template: ComponentStory<typeof LoadingCircularProgress> = (args) => <LoadingCircularProgress.type {...args} />;
+const Template: StoryFn<typeof LoadingCircularProgress> = (args) => <LoadingCircularProgress.type {...args} />;
 
 export const Basic = Template.bind({});
 Basic.storyName = "default";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Dropdown from "../../components/Dropdown";
 import { Typography } from "../../index";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/Dropdown",
   component: Dropdown,
   argTypes: {},
-} as ComponentMeta<typeof Dropdown>;
+} as Meta<typeof Dropdown>;
 
-const Template: ComponentStory<typeof Dropdown> = (args) => {
+const Template: StoryFn<typeof Dropdown> = (args) => {
   const [selected, setSelected] = useState<any>({ id: 8, name: "Sacombank" });
   return (
     <Dropdown.type
@@ -46,7 +46,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateStandard: ComponentStory<typeof Dropdown> = (args) => {
+const TemplateStandard: StoryFn<typeof Dropdown> = (args) => {
   const [selected, setSelected] = useState<any>({ id: 1, percentage: "10%", text: "Thuế đầu vào" });
   return (
     <Dropdown.type
@@ -85,7 +85,7 @@ Standard.parameters = {
   },
 };
 
-const TemplateMultiple: ComponentStory<typeof Dropdown> = (args) => {
+const TemplateMultiple: StoryFn<typeof Dropdown> = (args) => {
   const [selected, setSelected] = useState<any[]>([]);
 
   const options = [
@@ -126,7 +126,7 @@ Multiple.parameters = {
   },
 };
 
-const TemplateInline: ComponentStory<typeof Dropdown> = (args) => {
+const TemplateInline: StoryFn<typeof Dropdown> = (args) => {
   const [selected, setSelected] = useState<any[]>([{ id: 1, name: "Tiền mặt" }]);
   return (
     <Dropdown.type

@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Box from "../../components/Box";
 import Typography from "../../components/Typography";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/Box",
   component: Box,
   argTypes: {},
-} as ComponentMeta<typeof Box>;
+} as Meta<typeof Box>;
 
-const Template: ComponentStory<typeof Box> = (args) => <Box.type width="300px" padding={4} {...args} />;
+const Template: StoryFn<typeof Box> = (args) => <Box.type width="300px" padding={4} {...args} />;
 
 export const Basic = Template.bind({});
 Basic.storyName = "default";

@@ -49,7 +49,7 @@ export default function createSapoTheme(options?: PartialTheme, ...args: object[
       pxToRem: pxToRem,
       spacing: spacing,
       i18n: (key: string, data?: any) => {
-        let text =
+        const text =
           options?.locales?.[options?.currentLocale || "vi"]?.[key] ||
           (locales as any)[options?.currentLocale || "vi"]?.[key];
         if (!data) return text;

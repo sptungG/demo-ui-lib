@@ -47,292 +47,305 @@ interface AutocompleteInfiniteRef {
   //todo
 }
 
-const AutoCompleteInfinite = React.forwardRef<AutocompleteInfiniteRef, AutoCompleteInfiniteProps>((props, ref) => {
-  const theme = useTheme();
-  const {
-    label,
-    required,
-    onChange,
-    error,
-    helperText,
-    placeholder,
-    textNoResult = theme.i18n("no_result"),
-    textAdd = theme.i18n("text_add"),
-    createable,
-    onSubmit,
-    onClickCreate,
-    onQueryChange,
-    placement,
-    fetchOptions,
-    id,
-    limit = 10,
-    debounceTimeout = 0,
-    renderOption,
-    uniqKey = "id",
-    disabled,
-  } = props;
-  const uid = useMemo(() => (id ? id : `Sapo-AutoCompleteInfinite-${uuidv4()}`), [id]);
-  const containerListItemRef = useRef<HTMLDivElement | null>(null);
-  const refOptions = useRef<any[]>([]);
-  const isChanging = useRef<boolean>(true);
-  const didMountRef = useRef(false);
+const AutoCompleteInfinite = React.forwardRef<AutocompleteInfiniteRef, AutoCompleteInfiniteProps>(
+  (props, ref) => {
+    const theme = useTheme();
+    const {
+      label,
+      required,
+      onChange,
+      error,
+      helperText,
+      placeholder,
+      textNoResult = theme.i18n("no_result"),
+      textAdd = theme.i18n("text_add"),
+      createable,
+      onSubmit,
+      onClickCreate,
+      onQueryChange,
+      placement,
+      fetchOptions,
+      id,
+      limit = 10,
+      debounceTimeout = 0,
+      renderOption,
+      uniqKey = "id",
+      disabled,
+    } = props;
+    const uid = useMemo(() => (id ? id : `Sapo-AutoCompleteInfinite-${uuidv4()}`), [id]);
+    const containerListItemRef = useRef<HTMLDivElement | null>(null);
+    const refOptions = useRef<any[]>([]);
+    const isChanging = useRef<boolean>(true);
+    const didMountRef = useRef(false);
 
-  const [open, setOpen] = useState(false);
-  const activatorRef = useRef<any>(null);
-  const [value, setValue] = useState<any | null | undefined>(props.value || null);
-  const [query, setQuery] = useState<string>(_.isNil(props.value?.[uniqKey]) ? "" : props.value?.[uniqKey]?.toString());
-  const [options, setOptions] = useState<string[]>([]);
-  const [metaData, setMetaData] = useState({
-    currentPage: 0,
-    totalPage: 0,
-    totalItems: 0,
-  });
-  const queryDebounce = useDebounce(query, debounceTimeout);
-  const rebuildTooltip = useTooltip();
+    const [open, setOpen] = useState(false);
+    const activatorRef = useRef<any>(null);
+    const [value, setValue] = useState<any | null | undefined>(props.value || null);
+    const [query, setQuery] = useState<string>(
+      _.isNil(props.value?.[uniqKey]) ? "" : props.value?.[uniqKey]?.toString()
+    );
+    const [options, setOptions] = useState<string[]>([]);
+    const [metaData, setMetaData] = useState({
+      currentPage: 0,
+      totalPage: 0,
+      totalItems: 0,
+    });
+    const queryDebounce = useDebounce(query, debounceTimeout);
+    const rebuildTooltip = useTooltip();
 
-  React.useImperativeHandle(ref, () => ({
-    open() {
+    React.useImperativeHandle(ref, () => ({
+      open() {
+        setOpen(true);
+      },
+      close() {
+        setOpen(false);
+        setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
+      },
+      setValue(value: any) {
+        setValue(value);
+      },
+    }));
+
+    useEffect(() => {
+      refOptions.current = options;
+      rebuildTooltip();
+    });
+
+    useEffect(() => {
+      if (didMountRef.current && open) {
+        handleQueryChange(1, false);
+      } else {
+        didMountRef.current = true;
+      }
+    }, [queryDebounce, open]);
+
+    const handleQueryChange = async (page = metaData.currentPage, append = false) => {
+      if (fetchOptions) {
+        const filter = await Promise.resolve(
+          onQueryChange?.({ page: page, query: queryDebounce, limit: limit }) || {
+            page: page,
+            query: queryDebounce,
+            limit: limit,
+          }
+        );
+        fetchOptions(filter).then((res) => {
+          if (res?.data) {
+            isChanging.current = false;
+            setOpen(true);
+            setMetaData({
+              currentPage: page,
+              totalPage: Math.ceil(res.total / res.limit),
+              totalItems: res.total,
+            });
+            setOptions((prev) => (append ? [...prev, ...res.data] : res.data));
+            if (!append) {
+              const wrapper = containerListItemRef.current?.querySelector(
+                ".InfiniteScroll-ListItem"
+              );
+              if (wrapper) wrapper.scrollTop = 0;
+            }
+            setTimeout(() => {
+              const listSuggestItem =
+                containerListItemRef.current?.querySelectorAll(`[data-event='true']`);
+              if (!append && listSuggestItem && listSuggestItem.length > 0 && res.data) {
+                listSuggestItem.forEach((item) => {
+                  if (item.classList.contains("focused")) {
+                    item.classList.remove("focused");
+                  }
+                });
+              }
+            }, 10);
+          }
+        });
+      }
+    };
+
+    const handleNextPage = useCallback(async () => {
+      await handleQueryChange(metaData.currentPage + 1, true);
+    }, [handleQueryChange, metaData.currentPage]);
+
+    const handleEventChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setQuery(event.target.value);
+    };
+
+    const handleClosePopover = useCallback(
+      async (event?: any) => {
+        if (event?.relatedTarget) {
+          const relatedTarget = event.relatedTarget as HTMLElement;
+          if (relatedTarget?.getAttribute("key-event") === "true") {
+            return;
+          }
+        }
+        onSubmit?.(query, value, options);
+        setOpen(false);
+        setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
+      },
+      [queryDebounce, value, options]
+    );
+    const handleClick = () => {
       setOpen(true);
-    },
-    close() {
-      setOpen(false);
-      setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
-    },
-    setValue(value: any) {
-      setValue(value);
-    },
-  }));
+      handleQueryChange();
+    };
 
-  useEffect(() => {
-    refOptions.current = options;
-    rebuildTooltip();
-  });
-
-  useEffect(() => {
-    if (didMountRef.current && open) {
-      handleQueryChange(1, false);
-    } else {
-      didMountRef.current = true;
-    }
-  }, [queryDebounce, open]);
-
-  const handleQueryChange = async (page = metaData.currentPage, append = false) => {
-    if (fetchOptions) {
-      let filter = await Promise.resolve(
-        onQueryChange?.({ page: page, query: queryDebounce, limit: limit }) || {
-          page: page,
-          query: queryDebounce,
-          limit: limit,
+    const handleSelect = useCallback((event: any, idSelected: any) => {
+      if (idSelected) {
+        onChange(idSelected);
+        setOpen(false);
+        setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
+      }
+    }, []);
+    useEffect(() => {
+      setQuery(_.isNil(props.value) ? "" : renderOption(props.value));
+      if (open) {
+        if (!_.isEqual(value?.[uniqKey], props.value?.[uniqKey])) {
+          setValue(props.value);
         }
-      );
-      fetchOptions(filter).then((res) => {
-        if (res?.data) {
-          isChanging.current = false;
-          setOpen(true);
-          setMetaData({
-            currentPage: page,
-            totalPage: Math.ceil(res.total / res.limit),
-            totalItems: res.total,
-          });
-          setOptions((prev) => (append ? [...prev, ...res.data] : res.data));
-          if (!append) {
-            let wrapper = containerListItemRef.current?.querySelector(".InfiniteScroll-ListItem");
-            if (wrapper) wrapper.scrollTop = 0;
-          }
-          setTimeout(() => {
-            let listSuggestItem = containerListItemRef.current?.querySelectorAll(`[data-event='true']`);
-            if (!append && listSuggestItem && listSuggestItem.length > 0 && res.data) {
-              listSuggestItem.forEach((item) => {
-                if (item.classList.contains("focused")) {
-                  item.classList.remove("focused");
+      }
+    }, [props.value, open]);
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowUp":
+          const parentNode = document.querySelector(`[wrapper-suggest='${uid}']`);
+          const itemFocus = parentNode?.querySelector(".focus-key-event");
+          const listSuggestItem = parentNode?.querySelectorAll(`[key-event='true']`);
+          if (listSuggestItem && itemFocus) {
+            const sizeItems = listSuggestItem.length;
+            for (let i = 0; i < sizeItems; i++) {
+              const item = listSuggestItem[i];
+              if (item.classList.contains("focus-key-event")) {
+                item.classList.remove("focus-key-event");
+                let indexFocus = i;
+                if (event.key === "ArrowDown") {
+                  indexFocus = i !== sizeItems - 1 ? i + 1 : 0;
+                } else {
+                  indexFocus = i !== 0 ? i - 1 : 0;
                 }
-              });
-            }
-          }, 10);
-        }
-      });
-    }
-  };
-
-  const handleNextPage = useCallback(async () => {
-    await handleQueryChange(metaData.currentPage + 1, true);
-  }, [handleQueryChange, metaData.currentPage]);
-
-  const handleEventChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
-
-  const handleClosePopover = useCallback(
-    async (event?: any) => {
-      if (event?.relatedTarget) {
-        let relatedTarget = event.relatedTarget as HTMLElement;
-        if (relatedTarget?.getAttribute("key-event") === "true") {
-          return;
-        }
-      }
-      onSubmit?.(query, value, options);
-      setOpen(false);
-      setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
-    },
-    [queryDebounce, value, options]
-  );
-  const handleClick = () => {
-    setOpen(true);
-    handleQueryChange();
-  };
-
-  const handleSelect = useCallback((event: any, idSelected: any) => {
-    if (idSelected) {
-      onChange(idSelected);
-      setOpen(false);
-      setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
-    }
-  }, []);
-  useEffect(() => {
-    setQuery(_.isNil(props.value) ? "" : renderOption(props.value));
-    if (open) {
-      if (!_.isEqual(value?.[uniqKey], props.value?.[uniqKey])) {
-        setValue(props.value);
-      }
-    }
-  }, [props.value, open]);
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (event.key) {
-      case "ArrowDown":
-      case "ArrowUp":
-        const parentNode = document.querySelector(`[wrapper-suggest='${uid}']`);
-        const itemFocus = parentNode?.querySelector(".focus-key-event");
-        const listSuggestItem = parentNode?.querySelectorAll(`[key-event='true']`);
-        if (listSuggestItem && itemFocus) {
-          const sizeItems = listSuggestItem.length;
-          for (let i = 0; i < sizeItems; i++) {
-            const item = listSuggestItem[i];
-            if (item.classList.contains("focus-key-event")) {
-              item.classList.remove("focus-key-event");
-              let indexFocus = i;
-              if (event.key === "ArrowDown") {
-                indexFocus = i !== sizeItems - 1 ? i + 1 : 0;
-              } else {
-                indexFocus = i !== 0 ? i - 1 : 0;
+                listSuggestItem[indexFocus].scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "start",
+                });
+                listSuggestItem[indexFocus].classList.add("focus-key-event");
+                break;
               }
-              listSuggestItem[indexFocus].scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "start",
-              });
-              listSuggestItem[indexFocus].classList.add("focus-key-event");
-              break;
             }
+          } else if (listSuggestItem && listSuggestItem.length > 0 && event.key === "ArrowDown") {
+            listSuggestItem[0].classList.add("focus-key-event");
           }
-        } else if (listSuggestItem && listSuggestItem.length > 0 && event.key === "ArrowDown") {
-          listSuggestItem[0].classList.add("focus-key-event");
-        }
-        break;
-      case "Enter":
-        const optionFocus = document.querySelector(`[wrapper-suggest='${uid}'] .focus-key-event`);
-        optionFocus && handleClosePopover();
-        const idFocus = optionFocus?.getAttribute("data-id");
-        const newValue = options.find((e) => e[uniqKey]?.toString() === idFocus);
-        newValue && handleSelect(null, newValue);
-        break;
-      default:
-        break;
-    }
-  };
+          break;
+        case "Enter":
+          const optionFocus = document.querySelector(`[wrapper-suggest='${uid}'] .focus-key-event`);
+          optionFocus && handleClosePopover();
+          const idFocus = optionFocus?.getAttribute("data-id");
+          const newValue = options.find((e) => e[uniqKey]?.toString() === idFocus);
+          newValue && handleSelect(null, newValue);
+          break;
+        default:
+          break;
+      }
+    };
 
-  return (
-    <StyledAutoCompleteInfinite>
-      {!isNil(label) && (
-        <InputLabel asterisk={required} htmlFor={uid} data-tip={props["data-tip"]}>
-          {label}
-        </InputLabel>
-      )}
-      <InputRootContainer ref={activatorRef} disabled={disabled}>
-        <Input
-          onClick={handleClick}
-          onKeyDown={handleKeyDown}
-          autoComplete={"off"}
-          value={query}
-          onChange={handleEventChangeQuery}
-          placeholder={placeholder}
-          //onBlur={handleClosePopover}
-          disabled={disabled}
-        />
-        <Fieldset error={error} />
-        {query !== "" && (
-          <StyledCloseButton
-            size="small"
-            variant="text"
-            onClick={() => {
-              if (!disabled) {
-                setQuery("");
-                onSubmit?.("", value, options);
-              }
-            }}
-          >
-            <OffCloseIcon className={"closeIcon"} size="small" />
-          </StyledCloseButton>
+    return (
+      <StyledAutoCompleteInfinite>
+        {!isNil(label) && (
+          <InputLabel asterisk={required} htmlFor={uid} data-tip={props["data-tip"]}>
+            {label}
+          </InputLabel>
         )}
-      </InputRootContainer>
-      <Popover
-        open={open}
-        onClose={handleClosePopover}
-        reference={activatorRef}
-        placement={placement}
-        width={
-          400 > (activatorRef.current?.clientWidth || 0)
-            ? theme.pxToRem(activatorRef.current?.clientWidth)
-            : theme.pxToRem(400)
-        }
-        data-list={uid}
-      >
-        {options.length > 0 ? (
-          <ListItem ref={containerListItemRef}>
-            <InfiniteScroll
-              dataLength={options.length}
-              next={handleNextPage}
-              hasMore={metaData.currentPage < metaData.totalPage - 1}
-              loader={
-                <Box display="flex" alignItems="center" justifyContent="center" py={2}>
-                  <CircularProgress />
-                </Box>
-              }
-              height={"auto"}
-              style={{ maxHeight: 300, overflow: "hidden auto" }}
-              className="Sapo-InfiniteScroll__ListItem"
+        <InputRootContainer ref={activatorRef} disabled={disabled}>
+          <Input
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            autoComplete={"off"}
+            value={query}
+            onChange={handleEventChangeQuery}
+            placeholder={placeholder}
+            //onBlur={handleClosePopover}
+            disabled={disabled}
+          />
+          <Fieldset error={error} />
+          {query !== "" && (
+            <StyledCloseButton
+              size="small"
+              variant="text"
+              onClick={() => {
+                if (!disabled) {
+                  setQuery("");
+                  onSubmit?.("", value, options);
+                }
+              }}
             >
-              {options.map((item, idx) => (
-                <SelectItem selected={item === value} onSelect={handleSelect} value={item} key={idx} checkbox={false}>
-                  {renderOption(item)}
-                </SelectItem>
-              ))}
-            </InfiniteScroll>
-          </ListItem>
-        ) : (
-          <ListItem>
-            {createable && (
-              <Item
-                onClick={() => {
-                  onClickCreate?.(query);
-                  setOpen(false);
-                  setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
-                }}
+              <OffCloseIcon className={"closeIcon"} size="small" />
+            </StyledCloseButton>
+          )}
+        </InputRootContainer>
+        <Popover
+          open={open}
+          onClose={handleClosePopover}
+          reference={activatorRef}
+          placement={placement}
+          width={
+            400 > (activatorRef.current?.clientWidth || 0)
+              ? theme.pxToRem(activatorRef.current?.clientWidth)
+              : theme.pxToRem(400)
+          }
+          data-list={uid}
+        >
+          {options.length > 0 ? (
+            <ListItem ref={containerListItemRef}>
+              <InfiniteScroll
+                dataLength={options.length}
+                next={handleNextPage}
+                hasMore={metaData.currentPage < metaData.totalPage - 1}
+                loader={
+                  <Box display="flex" alignItems="center" justifyContent="center" py={2}>
+                    <CircularProgress />
+                  </Box>
+                }
+                height={"auto"}
+                style={{ maxHeight: 300, overflow: "hidden auto" }}
+                className="Sapo-InfiniteScroll__ListItem"
               >
-                <StyledIconPlusButton size="small">
-                  <PlusCircleIcon />
-                </StyledIconPlusButton>{" "}
-                <TextAdd> {textAdd} </TextAdd> <TextNameAdd> {query}</TextNameAdd>
-              </Item>
-            )}
-            <TextNoResult>{textNoResult}</TextNoResult>
-          </ListItem>
-        )}
-      </Popover>
-      <HelperText error={error}>{helperText}</HelperText>
-    </StyledAutoCompleteInfinite>
-  );
-});
+                {options.map((item, idx) => (
+                  <SelectItem
+                    selected={item === value}
+                    onSelect={handleSelect}
+                    value={item}
+                    key={idx}
+                    checkbox={false}
+                  >
+                    {renderOption(item)}
+                  </SelectItem>
+                ))}
+              </InfiniteScroll>
+            </ListItem>
+          ) : (
+            <ListItem>
+              {createable && (
+                <Item
+                  onClick={() => {
+                    onClickCreate?.(query);
+                    setOpen(false);
+                    setMetaData({ currentPage: 1, totalPage: 0, totalItems: 0 });
+                  }}
+                >
+                  <StyledIconPlusButton size="small">
+                    <PlusCircleIcon />
+                  </StyledIconPlusButton>{" "}
+                  <TextAdd> {textAdd} </TextAdd> <TextNameAdd> {query}</TextNameAdd>
+                </Item>
+              )}
+              <TextNoResult>{textNoResult}</TextNoResult>
+            </ListItem>
+          )}
+        </Popover>
+        <HelperText error={error}>{helperText}</HelperText>
+      </StyledAutoCompleteInfinite>
+    );
+  }
+);
 AutoCompleteInfinite.displayName = "AutoCompleteInfinite";
 export default memo(AutoCompleteInfinite);
 
@@ -363,15 +376,14 @@ const ListItem = styled.div`
       background: ${({ theme }) => theme.palette.ink["20"]};
     }
   }
-,
 `;
 
 const Input = styled.input`
   background: ${({ disabled, theme }) => (disabled ? theme.palette.ink["20"] : "#fff")};
   resize: none;
   box-sizing: border-box;
-  padding: ${({ theme }) => theme.pxToRem(10)} ${({ theme }) => theme.pxToRem(12)} ${({ theme }) => theme.pxToRem(10)}
-    ${({ theme }) => theme.pxToRem(12)};
+  padding: ${({ theme }) => theme.pxToRem(10)} ${({ theme }) => theme.pxToRem(12)}
+    ${({ theme }) => theme.pxToRem(10)} ${({ theme }) => theme.pxToRem(12)};
   width: 100%;
   border: none;
   min-height: ${({ theme }) => theme.pxToRem(40)};

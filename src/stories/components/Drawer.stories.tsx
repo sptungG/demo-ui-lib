@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, useModal } from "../../index";
 import TextField from "../../components/TextField";
 import Drawer, { DrawerActions, DrawerContent, DrawerProps, DrawerTitle } from "../../components/Drawer";
@@ -10,9 +10,9 @@ export default {
   component: Drawer.type,
   subcomponents: { DrawerTitle, DrawerContent, DrawerActions },
   argTypes: {},
-} as ComponentMeta<typeof Drawer>;
+} as Meta<typeof Drawer>;
 
-const Template: ComponentStory<typeof Drawer> = (args: DrawerProps) => {
+const Template: StoryFn<typeof Drawer> = (args: DrawerProps) => {
   const { openModal } = useModal();
   const DrawerDoSomething = () => {
     const { closeModal } = useModal();

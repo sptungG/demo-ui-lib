@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import DatePickerPlus, { DateTransfer } from "../../components/DatePicker/DatePickerPlus";
 
 export default {
   title: "Components/DatePickerPlus",
   component: DatePickerPlus.type,
   argTypes: {},
-} as ComponentMeta<typeof DatePickerPlus>;
+} as Meta<typeof DatePickerPlus>;
 
-const Template: ComponentStory<typeof DatePickerPlus> = (args) => {
+const Template: StoryFn<typeof DatePickerPlus> = (args) => {
   const [value, setValue] = useState<DateTransfer>({
     firstDate: null,
     lastDate: null,
@@ -28,7 +28,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateInline: ComponentStory<typeof DatePickerPlus> = (args) => {
+const TemplateInline: StoryFn<typeof DatePickerPlus> = (args) => {
   const [value, setValue] = useState<DateTransfer>({
     firstDate: null,
     lastDate: null,

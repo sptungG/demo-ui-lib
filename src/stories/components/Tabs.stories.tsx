@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Tabs, { TabDescriptor } from "../../components/Tabs";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/Tabs",
   component: Tabs,
   argTypes: {},
-} as ComponentMeta<typeof Tabs>;
+} as Meta<typeof Tabs>;
 
-const TabsTemplate: ComponentStory<typeof Tabs> = (args) => {
+const TabsTemplate: StoryFn<typeof Tabs> = (args) => {
   const [tabs, setTabs] = useState<TabDescriptor[]>([
     {
       id: "Tab1",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import RadioGroup, { RadioGroupProps } from "../../components/RadioGroup";
 import Radio from "../../components/Radio";
 
@@ -9,9 +9,9 @@ export default {
   component: RadioGroup.type,
   subcomponents: { Radio },
   argTypes: {},
-} as ComponentMeta<React.FC<RadioGroupProps>>;
+} as Meta<React.FC<RadioGroupProps>>;
 
-const Template: ComponentStory<React.FC<RadioGroupProps>> = (args) => {
+const Template: StoryFn<React.FC<RadioGroupProps>> = (args) => {
   const [value, setValue] = useState("Radio No1");
   return (
     <RadioGroup.type

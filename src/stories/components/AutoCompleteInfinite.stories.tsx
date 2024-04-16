@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import AutoCompleteInfinite from "../../components/AutoCompleteInfinite";
 import { isNil } from "lodash";
 import { DataSource } from "../../components/DropdownInfinite";
@@ -9,9 +9,9 @@ export default {
   title: "Components/AutoCompleteInfinite",
   component: AutoCompleteInfinite,
   argTypes: {},
-} as ComponentMeta<typeof AutoCompleteInfinite>;
+} as Meta<typeof AutoCompleteInfinite>;
 
-const Template: ComponentStory<typeof AutoCompleteInfinite> = (args) => {
+const Template: StoryFn<typeof AutoCompleteInfinite> = (args: any) => {
   const [reason, setReason] = useState<ReasonResponse | null>();
   const handleFetchOptions = useCallback(
     async (filter: ReasonFilter) => {
@@ -34,7 +34,9 @@ const Template: ComponentStory<typeof AutoCompleteInfinite> = (args) => {
         let selected: ReasonResponse | undefined;
         if (options.length > 0) {
           const optionsReverse = [...options].reverse();
-          selected = optionsReverse.find((e) => e.name.toLocaleLowerCase() === query.toLocaleLowerCase());
+          selected = optionsReverse.find(
+            (e) => e.name.toLocaleLowerCase() === query.toLocaleLowerCase()
+          );
         }
         onChange({
           id: selected?.id || 0,
@@ -49,7 +51,7 @@ const Template: ComponentStory<typeof AutoCompleteInfinite> = (args) => {
   };
   const onQueryChange = useCallback(
     async (filter) => {
-      let dataSourceFilter: ReasonFilter = {
+      const dataSourceFilter: ReasonFilter = {
         ...filter,
         ...initFilter,
         page: filter.page || 1,

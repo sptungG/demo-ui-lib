@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Pagination from "../../components/Pagination";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/Pagination",
   component: Pagination,
   argTypes: {},
-} as ComponentMeta<typeof Pagination>;
+} as Meta<typeof Pagination>;
 
-const Template: ComponentStory<typeof Pagination> = (args) => {
+const Template: StoryFn<typeof Pagination> = (args) => {
   const [page, setPage] = useState({
     id: 1,
     limit: 20,

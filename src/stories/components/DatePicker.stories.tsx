@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import DatePicker, { ActivatorDatePickerProps } from "../../components/DatePicker";
 import { Button } from "../../index";
 
@@ -7,9 +7,9 @@ export default {
   title: "Components/DatePicker",
   component: DatePicker.type,
   argTypes: {},
-} as ComponentMeta<typeof DatePicker>;
+} as Meta<typeof DatePicker>;
 
-const Template: ComponentStory<typeof DatePicker> = (args: any) => {
+const Template: StoryFn<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   return <DatePicker.type label="Ngày tham chiếu" {...args} value={date} onChange={setDate} />;
 };
@@ -22,7 +22,7 @@ Basic.parameters = {
   },
 };
 
-const TemplateYearSelect: ComponentStory<typeof DatePicker> = (args: any) => {
+const TemplateYearSelect: StoryFn<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   return (
     <DatePicker.type
@@ -44,7 +44,7 @@ YearSelect.parameters = {
   },
 };
 
-const TemplateCustom: ComponentStory<typeof DatePicker> = (args: any) => {
+const TemplateCustom: StoryFn<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   const renderActivator = useCallback(
     ({ onClick, reference }: ActivatorDatePickerProps) => (
@@ -67,7 +67,7 @@ Custom.parameters = {
   },
 };
 
-const TemplateRange: ComponentStory<typeof DatePicker> = (args: any) => {
+const TemplateRange: StoryFn<typeof DatePicker> = (args: any) => {
   const [date, setDate] = useState<Date | null>();
   const [endDate, setEndDate] = useState<Date | null>();
   return (

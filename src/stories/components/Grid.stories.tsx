@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import Grid from "../../components/Grid";
 import Typography from "../../components/Typography";
 
@@ -8,9 +8,9 @@ export default {
   title: "Components/Grid",
   component: Grid,
   argTypes: {},
-} as ComponentMeta<typeof Grid>;
+} as Meta<typeof Grid>;
 
-const Template: ComponentStory<typeof Grid> = (args) => (
+const Template: StoryFn<typeof Grid> = (args) => (
   <Grid.type container spacing={2}>
     <Grid.type item xs={12}>
       <Typography.type align="center">xs=12</Typography.type>

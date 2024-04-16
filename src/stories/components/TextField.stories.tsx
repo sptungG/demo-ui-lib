@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import TextField from "../../components/TextField";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/TextField",
   component: TextField,
   argTypes: {},
-} as ComponentMeta<typeof TextField>;
+} as Meta<typeof TextField>;
 
-const Template: ComponentStory<typeof TextField> = (args) => {
+const Template: StoryFn<typeof TextField> = (args) => {
   const [text, setText] = useState("");
   return <TextField.type {...args} value={text} onChange={setText} />;
 };

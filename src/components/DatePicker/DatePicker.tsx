@@ -12,13 +12,13 @@ import useDateRangePicker from "./useDateRangePicker";
 import { Placement } from "@popperjs/core";
 import { HorizontalSizing } from "../../theme";
 
-export interface ActivatorDatePickerProps {
+export type ActivatorDatePickerProps = {
   reference: React.MutableRefObject<any>;
   onClick: () => void;
   open: boolean;
-}
+};
 
-export interface DatePickerProps extends HorizontalSizing {
+export type DatePickerProps = HorizontalSizing & {
   value: Date | null | undefined;
   onChange: (date: Date | null) => void;
   secondValue?: Date | null | undefined;
@@ -44,7 +44,7 @@ export interface DatePickerProps extends HorizontalSizing {
   popperWidth?: CSSObject["width"];
   renderActivator?: (props: ActivatorDatePickerProps) => React.ReactNode;
   dateAppendOnFirstOpen?: Date | null;
-}
+};
 
 const DatePicker = ({
   value,
@@ -130,7 +130,13 @@ const DatePicker = ({
     <Fragment>
       <Toolbar>
         {isYearSelect ? (
-          <YearSelect month={month} year={year} minDate={minDate} maxDate={maxDate} onChangeDateFocus={setDateFocus} />
+          <YearSelect
+            month={month}
+            year={year}
+            minDate={minDate}
+            maxDate={maxDate}
+            onChangeDateFocus={setDateFocus}
+          />
         ) : (
           <MonthPrevNext month={month} year={year} onChangeDateFocus={setDateFocus} />
         )}

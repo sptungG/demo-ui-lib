@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import InputQuantity from "../../components/InputQuantity";
 
 export default {
@@ -7,9 +7,9 @@ export default {
   title: "Components/InputQuantity",
   component: InputQuantity,
   argTypes: {},
-} as ComponentMeta<typeof InputQuantity>;
+} as Meta<typeof InputQuantity>;
 
-const Template: ComponentStory<typeof InputQuantity> = (args) => {
+const Template: StoryFn<typeof InputQuantity> = (args) => {
   const [price, setPrice] = useState<number>();
   return <InputQuantity.type width="200px" {...args} label="Giá bán" tooltip="Tooltip gợi ý" value={price} onChange={setPrice} />;
 };
